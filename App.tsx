@@ -5,6 +5,7 @@ import { useFonts, NunitoSans_400Regular, NunitoSans_700Bold } from '@expo-googl
 import { Loading } from '@components/Loading';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Home } from '@screens/Home';
+import { Statics } from '@screens/Statics';
 export default function App() {
   const [fontsLoaded] = useFonts({NunitoSans_400Regular, NunitoSans_700Bold});
 
@@ -13,7 +14,7 @@ export default function App() {
     <ThemeProvider theme={theme}>   
       <View style={styles.container}>
         { 
-          fontsLoaded ?  <Home /> : <Loading />
+          fontsLoaded ?  <Statics /> : <Loading />
         }
         <StatusBar 
           barStyle="dark-content"
