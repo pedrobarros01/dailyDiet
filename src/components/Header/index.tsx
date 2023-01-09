@@ -8,7 +8,7 @@ type Props = {
 export function Header({title = ''}: Props){
     return(
         <Container>       
-            <ButtonIcon>
+            <ButtonIcon onPress={() => console.log("Aoba")}>
                     <IconBack name="arrowleft" />
             </ButtonIcon>
 

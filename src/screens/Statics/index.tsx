@@ -18,11 +18,11 @@ export function Statics({media = 'ACIMA'} : Props){
             <BoxStaticsGeneral>
                 <Title>Estatísticas Gerais</Title>
                 <BoxStatics>
-                    <CardStatics />
-                    <CardStatics />
+                    <CardStatics type="INFO" />
+                    <CardStatics type="INFO" />
                     <BoxMeals>
-                        <CardStatics />
-                        <CardStatics />
+                        <CardStatics  type="MEDIA" media="ACIMA"  />
+                        <CardStatics type="MEDIA" media="ABAIXO" />
                     </BoxMeals>
                 </BoxStatics>
             </BoxStaticsGeneral>
