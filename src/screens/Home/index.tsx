@@ -3,7 +3,6 @@ import logo from "@assets/logo.png";
 import user from "@assets/user.png";
 import { StaticsOverview } from "@components/StaticsOverview";
 import { Button } from "@components/Button";
-import { CardMeal } from "@components/CardMeal";
 import { FlatList, ScrollView, Text } from "react-native";
 import { ListMeals } from "@components/ListMeals";
 export function Home(){

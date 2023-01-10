@@ -8,6 +8,7 @@ import { Home } from '@screens/Home';
 import { Statics } from '@screens/Statics';
 import { Create } from '@screens/Create';
 import { FeedBack } from '@screens/Feedback';
+import { Meal } from '@screens/Meal';
 export default function App() {
   const [fontsLoaded] = useFonts({NunitoSans_400Regular, NunitoSans_700Bold});
 
@@ -16,7 +17,7 @@ export default function App() {
     <ThemeProvider theme={theme}>   
       <View style={styles.container}>
         { 
-          fontsLoaded ?  <FeedBack /> : <Loading />
+          fontsLoaded ?  <Meal /> : <Loading />
         }
         <StatusBar 
           barStyle="dark-content"

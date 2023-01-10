@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { Container, Date } from "./styles";
 
 export function ListMeals(){
-    const array: string[] = ['10', '11', '12', '14' ,'15', '16', '17', '18', '19'];
+    const array: string[] = ['100', '11', '12', '14' ,'15', '16', '17', '18', '19'];
 
     return(
         <Container>

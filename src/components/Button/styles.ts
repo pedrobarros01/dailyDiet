@@ -25,6 +25,7 @@ export const Container = styled(TouchableOpacity)<Props>`
 
     border: ${({theme, type}) =>type === 'SOLID' ? null : `1px solid ${theme.COLORS.BASE.GRAY_100}`};
     border-radius: 6px;
+    margin-bottom: 12px;
 `;
 export const Title = styled.Text<Props>`
     ${({theme, type}) => css`
