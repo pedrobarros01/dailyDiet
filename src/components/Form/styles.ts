@@ -1,5 +1,5 @@
-import styled from "styled-components/native";
-
+import styled, { css } from "styled-components/native";
+import { ScrollView } from "react-native";
 export const Container = styled.View`
     flex: 1;
     background-color: ${({theme}) => theme.COLORS.BASE.GRAY_700};
@@ -10,8 +10,35 @@ export const Container = styled.View`
 `;
 export const BoxForm = styled.View`
     flex: 1;
-    min-height: 300px;
-    max-height: 300px;
+    width: 100%;
+    
+`;
+export const BoxDateTime = styled.View`
+    width: 100%;
+    height: 70px;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+`;
+export const BoxSelects = styled.View`
+    flex: 1;
+    min-height: 100px;
+    max-height: 100px;
+    align-items: flex-start;
+
+`;
+export const Label = styled.Text`
+    ${({theme}) => css`
+        font-family: ${theme.FONT_FAMILY.BOLD};
+        font-size: ${theme.FONT_SIZE.TITLE.XS}px;
+        color: ${theme.COLORS.BASE.GRAY_200};
+        text-align: center;
+        margin-bottom: 12px;
+
+    `}
+`;
+export const BoxSelect = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
     width: 100%;
 `;

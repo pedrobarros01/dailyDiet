@@ -2,7 +2,7 @@ import { Container, Title, ButtonTypesProp, Icon } from "./styles";
 import {Feather} from "@expo/vector-icons";
 type Props = {
     type?: ButtonTypesProp,
-    icon: keyof typeof Feather.glyphMap | null;
+    icon?: keyof typeof Feather.glyphMap | null;
     text: string;
 }
 

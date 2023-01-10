@@ -11,8 +11,8 @@ type Props = {
 
 export const Container = styled(TouchableOpacity)<Props>`
     flex: 1;
-    min-height: 66px;
-    max-height: 66px;
+    min-height: 56px;
+    max-height: 56px;
     width: 100%;
 
     background-color: ${({theme, type}) => type === 'SOLID' ? theme.COLORS.BASE.GRAY_200 : theme.COLORS.BASE.GRAY_700};
