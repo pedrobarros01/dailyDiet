@@ -24,7 +24,7 @@ export function Form(){
                     date
                 />
                 </BoxDateTime>
-                    <BoxSelects>
+                <BoxSelects>
                         <Label>Está dentro da dieta?</Label>
                         <BoxSelect>
                             <Select 
@@ -40,7 +40,6 @@ export function Form(){
                         </BoxSelect>
                 </BoxSelects>
             </BoxForm>
-            
             <Button text="Cadastrar Refeição" />
         </Container>
     );
