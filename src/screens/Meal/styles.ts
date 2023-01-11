@@ -1,8 +1,13 @@
 import styled, { css } from "styled-components/native";
+import {FontAwesome} from "@expo/vector-icons";
+import { MediaProps } from "@screens/Statics/styles";
+type Props = {
+    media: MediaProps;
+}
 
-export const Container = styled.View`
+export const Container = styled.View<Props>`
     flex: 1;
-    background-color: ${({theme}) => theme.COLORS.BRAND.GREEN.LIGHT};
+    background-color: ${({theme,media}) => media === 'ACIMA' ? theme.COLORS.BRAND.GREEN.LIGHT : theme.COLORS.BRAND.RED.LIGHT};
 `;
 export const Box = styled.View`
     flex: 1;
@@ -55,6 +60,30 @@ export const DateTime = styled.Text`
         font-family: ${theme.FONT_FAMILY.REGULAR};
         font-size: ${theme.FONT_SIZE.BODY.M}px;
         color: ${theme.COLORS.BASE.GRAY_200};
+        margin-bottom: 12px;
         text-align: center;
     `}
 `;
+export const ChipCard = styled.View`
+    flex: 1;
+    min-height: 40px;
+    max-height: 40px;
+    width: 40%;
+    border-radius: 100px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: ${({theme}) => theme.COLORS.BASE.GRAY_600};
+`;
+export const TitleChip = styled.Text`
+    ${({theme}) => css`
+        font-family: ${theme.FONT_FAMILY.REGULAR};
+        font-size: ${theme.FONT_SIZE.BODY.S}px;
+        color: ${theme.COLORS.BASE.GRAY_100};
+    `}
+`;
+
+export const Icon = styled(FontAwesome).attrs<Props>(({theme, media}) => ({
+    size: 12,
+    color: media === 'ACIMA' ? theme.COLORS.BRAND.GREEN.DARK : theme.COLORS.BRAND.RED.DARK
+}))``;
