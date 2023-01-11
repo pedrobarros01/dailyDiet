@@ -1,7 +1,7 @@
 import { Button } from "@components/Button";
 import { Header } from "@components/Header";
+import { ModalMeal } from "@components/ModalMeal";
 import { MediaProps } from "@screens/Statics/styles";
-import { Modal, Text } from "react-native";
 import { Container, BoxButton, Box, BoxTitleAndSubTitle, DateTime, DateTimeTitle, DescMeal, NameMeal, ChipCard, Icon, TitleChip } from "./styles";
 
 type Props = {
@@ -11,7 +11,6 @@ export function Meal({media = 'ACIMA'}: Props){
     return(
         <Container media={media} >
             <Header title="Refeição" />
-            
             <Box>
                 <BoxTitleAndSubTitle>
                     <NameMeal>Sanduiche</NameMeal>
@@ -45,6 +44,7 @@ export function Meal({media = 'ACIMA'}: Props){
 
                 </BoxButton>
             </Box>
+            <ModalMeal mostrar={false} />
         </Container>
     );
 }
