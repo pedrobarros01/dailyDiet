@@ -1,18 +1,22 @@
 import { Container, COntainerIcon, Hour, Icon, Line, Title } from "./styles";
+type Props ={
+    hour: string;
+    title: string;
+    diet: boolean;
+}
 
-
-export function CardMeal(){
+export function CardMeal({hour, title, diet}: Props){
     return(
         <Container>
-            <Hour>20:00</Hour>
+            <Hour>{hour}</Hour>
             <Line />
             <Title
                 numberOfLines={1}
             >
-                ahgajsdfggkjdhsgfsdgjkjdsgfdsaghhgchgchchchchchchgcjgvghjvjhvvjjhvjvjvjhvjhvvhghghgvhgghgghs
+                {title}
             </Title>
             <COntainerIcon>
-                <Icon name="circle"  />
+                <Icon name="circle" diet={diet}  />
             </COntainerIcon>
         </Container>
     );

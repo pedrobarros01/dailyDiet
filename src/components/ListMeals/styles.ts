@@ -3,7 +3,7 @@ import styled, { css } from "styled-components/native";
 export const Container = styled.View`
     flex: 1;
     align-items: flex-start;
-    width: 100%;
+    width: 90%;
     margin-bottom: 12px;
 `;
 
@@ -16,4 +16,10 @@ export const Date = styled.Text`
         margin-top: 12px;
         margin-bottom: 6px;
     `}
+`;
+export const BoxList = styled.View`
+    flex: 1;
+    width: 100%;
+    min-height: 300px;
+    max-height: 300px;
 `;

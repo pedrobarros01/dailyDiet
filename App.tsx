@@ -3,12 +3,7 @@ import { ThemeProvider } from 'styled-components/native';
 import theme from './src/theme';
 import { useFonts, NunitoSans_400Regular, NunitoSans_700Bold } from '@expo-google-fonts/nunito-sans';
 import { Loading } from '@components/Loading';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Home } from '@screens/Home';
-import { Statics } from '@screens/Statics';
-import { Create } from '@screens/Create';
-import { FeedBack } from '@screens/Feedback';
-import { Meal } from '@screens/Meal';
+import { Routes } from './src/routes';
 export default function App() {
   const [fontsLoaded] = useFonts({NunitoSans_400Regular, NunitoSans_700Bold});
 
@@ -17,7 +12,7 @@ export default function App() {
     <ThemeProvider theme={theme}>   
       <View style={styles.container}>
         { 
-          fontsLoaded ?  <Meal /> : <Loading />
+          fontsLoaded ?  <Routes /> : <Loading />
         }
         <StatusBar 
           barStyle="dark-content"

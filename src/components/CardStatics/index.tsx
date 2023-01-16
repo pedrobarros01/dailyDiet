@@ -5,6 +5,8 @@ import { CardProps, Container, SubTitle, Title } from "./styles";
 type Props = {
     media?: MediaProps;
     type?: CardProps;
+    title: string;
+    subtitle: string;
 }
 
 export function CardStatics({media = 'ACIMA', type = 'INFO'} : Props){

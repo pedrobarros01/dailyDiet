@@ -1,17 +1,18 @@
 import styled, { css } from "styled-components/native";
 import {FontAwesome} from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
 
 type Iconprops = {
     diet: boolean;
 }
 
-export const Container = styled.View`
+export const Container = styled(TouchableOpacity)`
     flex: 1;
     min-height: 56px;
     max-height: 56px;
     width: 100%;
     flex-direction: row;
-    margin-bottom: 6px;
+    margin-bottom: 12px;
     border: 1px solid ${({theme}) => theme.COLORS.BASE.GRAY_500};
     justify-content: space-around;
     align-items: center;

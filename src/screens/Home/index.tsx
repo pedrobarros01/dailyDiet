@@ -5,8 +5,15 @@ import { StaticsOverview } from "@components/StaticsOverview";
 import { Button } from "@components/Button";
 import { FlatList, ScrollView, Text } from "react-native";
 import { ListMeals } from "@components/ListMeals";
+import { useNavigation } from "@react-navigation/native";
 export function Home(){
-    const array: string[] = ['1','2','3','4','5','6']
+    const navigation = useNavigation();
+
+    const array: string[] = ['1','2','3','4']
+    function handleCreate(){
+        navigation.navigate("Create");
+    }
+    
     return(
         <Container>
             <Header>
@@ -18,7 +25,8 @@ export function Home(){
                 <Label>Refeições</Label>
                 <Button
                     text="Nova refeição"
-                    icon="plus" 
+                    icon="plus"
+                    onPress={handleCreate}
                 />
                 
                 <FlatList 
