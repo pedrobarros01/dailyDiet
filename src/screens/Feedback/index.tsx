@@ -3,10 +3,17 @@ import Dentro from "@assets/IllustrationDentro.png";
 import Fora from "@assets/IllustrationFora.png";
 import { Button } from "@components/Button";
 import { MediaProps } from "@screens/Statics/styles";
+import { useNavigation, useRoute } from "@react-navigation/native";
 type Props = {
-    dieta?: MediaProps;
+    dieta: MediaProps;
 }
-export function FeedBack({dieta = 'ACIMA'}:Props){
+export function FeedBack(){
+    const navigation = useNavigation();
+    const route = useRoute();
+    const { dieta } = route.params as Props;
+    function handleHome(){
+        navigation.navigate("Home");
+    }
     return(
         <Container>
             <Box>
@@ -27,7 +34,7 @@ export function FeedBack({dieta = 'ACIMA'}:Props){
                     }
                 </BoxInfo>
                 <ImageInfo source={dieta === 'ACIMA' ? Dentro : Fora}/>
-                <Button text="Ir para pagina inicial" />
+                <Button text="Ir para pagina inicial" onPress={handleHome} />
             </Box>
             
         </Container>

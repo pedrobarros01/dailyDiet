@@ -6,26 +6,35 @@ import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { SelectProps } from "@components/Select/styles";
 import { Container, BoxForm, BoxDateTime, BoxSelects, Label, BoxSelect } from "./styles";
 import { useNavigation } from "@react-navigation/native";
+import { MediaProps } from "@screens/Statics/styles";
+type FormType = 'CREATE' | 'EDIT';
+type Props = {
 
-export function Form(){
+    type?:FormType;
+    nomeProp?:string;
+    horaProp?:string;
+    dataProp?:string;
+    descricaoProp?:string;
+    selectProp?:SelectProps;
+}
+
+
+export function Form({ type = 'CREATE', nomeProp = '', horaProp = '', dataProp = '', descricaoProp = '', selectProp = 'VAZIO' }: Props){
     const [nome, setNome] = useState("");
     const [hora, setHora] = useState("");
     const [data, setData] = useState("");
     const [descricao, setDescricao] = useState("");
     const [select, setSelect] = useState<SelectProps>('VAZIO');
-    const [selectProp, setSelectProp] = useState<boolean | null>(null);
+    const [checkselect, setCheckSelect] = useState<boolean | null>(null);
     const navigation = useNavigation();
 
-    function handleSelect(){
-        const selectAux = !selectProp;
-        setSelectProp(!selectProp);
-        if(selectAux){
-            setSelect('SIM');
-        }else{
-            setSelect('NAO');
-        }
-
-        
+    function handleSelectSim(){
+        setSelect("SIM");
+        setCheckSelect(true);
+    }
+    function handleSelectNao(){
+        setSelect("NAO");
+        setCheckSelect(false);
     }
     function handleCreate(){
         const obj = {
@@ -36,7 +45,11 @@ export function Form(){
             dieta: select
         }
         console.log(obj);
-        navigation.navigate("Home");
+        const dieta: MediaProps = select === 'SIM' ?  'ACIMA' : 'ABAIXO'
+        navigation.navigate("FeedBack", {dieta});
+    }
+    function handleEdit(){
+        navigation.navigate("Meal");
     }
     return(
         <Container> 
@@ -65,21 +78,21 @@ export function Form(){
                         <Label>Está dentro da dieta?</Label>
                         <BoxSelect>
                             <Select 
-                                select={selectProp ? 'SIM' : 'VAZIO'}
+                                select={checkselect ? 'SIM' : 'VAZIO'}
                                 icon="SIM" 
                                 label="Sim"
-                                onPress={handleSelect}
+                                onPress={handleSelectSim}
                             />
                             <Select 
-                                select={!selectProp ? 'NAO' : 'VAZIO'} 
+                                select={!checkselect && checkselect !== null ? 'NAO' : 'VAZIO'} 
                                 icon="NAO" 
                                 label="Não"
-                                onPress={handleSelect}
+                                onPress={handleSelectNao}
                             />
                         </BoxSelect>
                 </BoxSelects>
             </BoxForm>
-            <Button text="Cadastrar Refeição" onPress={handleCreate} />
+            <Button text={type === 'CREATE' ? "Cadastrar Refeição" : "Salvar Alterações"} onPress={type === 'CREATE' ? handleCreate : handleEdit} />
         </Container>
     );
 }

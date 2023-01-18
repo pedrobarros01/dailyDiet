@@ -3,9 +3,16 @@ import { Modal } from "react-native";
 import { ModalCenteredView, BoxButtons, LabelModal, ModalView } from "./styles";
 type Props = {
     mostrar:boolean;
+    setMostrar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function ModalMeal({mostrar = false}:Props){
+export function ModalMeal({mostrar, setMostrar}:Props){
+    function handleCancelar(){
+        setMostrar(false);
+    }
+    function handleExcluir(){
+        console.log("Alou");
+    }
     return(
         <Modal
             animationType="slide"
@@ -19,10 +26,12 @@ export function ModalMeal({mostrar = false}:Props){
                             <Button 
                                 type="OUTLINED" 
                                 text="Cancelar"
+                                onPress={handleCancelar}
                             />
                             <Button 
                                 type="SOLID"
                                 text="Sim, excluir"
+                                onPress={handleExcluir}
                             />
                         </BoxButtons>
                     </ModalView>

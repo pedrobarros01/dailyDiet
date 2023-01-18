@@ -1,6 +1,7 @@
 import { Button } from "@components/Button";
 import { Header } from "@components/Header";
 import { ModalMeal } from "@components/ModalMeal";
+import { useNavigation } from "@react-navigation/native";
 import { MediaProps } from "@screens/Statics/styles";
 import { useState } from "react";
 import { Container, BoxButton, Box, BoxTitleAndSubTitle, DateTime, DateTimeTitle, DescMeal, NameMeal, ChipCard, Icon, TitleChip } from "./styles";
@@ -9,11 +10,13 @@ type Props = {
 }
 export function Meal({media = 'ACIMA'}: Props){
     const [mostrar, setMostrar] = useState(false)
+    const navigation = useNavigation();
     function handleExcluir(){
         setMostrar(true);
     }
     function handleEditar(){
         console.log("Alou");
+        navigation.navigate("Edit");
     }
     return(
         <Container media={media} >
@@ -54,7 +57,7 @@ export function Meal({media = 'ACIMA'}: Props){
 
                 </BoxButton>
             </Box>
-            <ModalMeal mostrar={mostrar} />
+            <ModalMeal mostrar={mostrar} setMostrar={setMostrar} />
         </Container>
     );
 }
