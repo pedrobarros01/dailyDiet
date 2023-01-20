@@ -7,13 +7,15 @@ import { getOverViewOutMealDiet } from "@storage/overview/getOverViewOutMealDiet
 import { getOverViewSequenceMealsInsideDiet } from "@storage/overview/getOverViewSequenceMealsInsideDiet";
 import { Container, BoxStaticsGeneral, BoxHighLight, MediaProps, Title, BoxStatics, BoxMeals } from "./styles";
 import {useState, useCallback} from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 type Props = {
-    media?: MediaProps;
+    media: MediaProps;
 }
 
 
-export function Statics({media = 'ACIMA'} : Props){
+export function Statics(){
+    const routes = useRoute();
+    const {media} = routes.params as Props;
     const [insideMeal, setInsideMeal] = useState<number>(0);
     const [outMeal, setOutMeal] = useState<number>(0);
     const [allMeal, setAllMeal] = useState<number>(0);
