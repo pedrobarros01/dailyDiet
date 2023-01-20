@@ -3,17 +3,33 @@ import logo from "@assets/logo.png";
 import user from "@assets/user.png";
 import { StaticsOverview } from "@components/StaticsOverview";
 import { Button } from "@components/Button";
-import { FlatList, ScrollView, Text } from "react-native";
+import { FlatList, ScrollView, Text, View } from "react-native";
 import { ListMeals } from "@components/ListMeals";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useCallback, useState, useEffect } from "react";
+import { Meal, MealCollection } from "@storage/meal/mealDTO";
+import { getDatesMeals } from "@storage/meal/getDatesMeals";
+import { getMealsByDate } from "@storage/meal/getMealsByDate";
+import { deleteMeals } from "@storage/meal/deleteMeal";
+import { deleteAll } from "@storage/meal/delete";
+import { delete2 } from "@storage/meal/delet2";
+import { Input } from "@components/Input";
 export function Home(){
     const navigation = useNavigation();
-
-    const array: string[] = ['1','2','3','4']
+    const [listMeals, setListMeals] = useState<Meal[]>([]);
+    const [data, setData] = useState("");
     function handleCreate(){
         navigation.navigate("Create");
     }
-    
+    async function handleSearch(){
+        try {
+            const list = await getMealsByDate(data);
+            setListMeals(list)
+            
+        } catch (error) {
+            console.error(error);
+        }
+    }
     return(
         <Container>
             <Header>
@@ -28,14 +44,18 @@ export function Home(){
                     icon="plus"
                     onPress={handleCreate}
                 />
-                
-                <FlatList 
-                    data={array}
-                    keyExtractor={(item) => item}
-                    renderItem={({item}) => <ListMeals />}
-                    showsVerticalScrollIndicator={false}
-                    style={{width: '100%'}}
+                <Input label="Digite a data" onChangeText={setData} />
+                <Button 
+                    text="Pesquisar"
+                    icon="search"
+                    onPress={handleSearch}
                 />
+                
+                <ListMeals date={data} list={listMeals} />
+                
+                
+                
+                
                 
                 
             </BoxMeal>

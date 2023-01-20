@@ -3,10 +3,11 @@ type Props ={
     hour: string;
     title: string;
     diet: boolean;
+    decricao: string;
     handleFunction: () => void;
 }
 
-export function CardMeal({hour, title, diet, handleFunction}: Props){
+export function CardMeal({hour, title, diet, handleFunction, decricao}: Props){
     return(
         <Container
         onPress={handleFunction}

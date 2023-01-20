@@ -7,19 +7,17 @@ import { SelectProps } from "@components/Select/styles";
 import { Container, BoxForm, BoxDateTime, BoxSelects, Label, BoxSelect } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { MediaProps } from "@screens/Statics/styles";
+import { Meal } from "@storage/meal/mealDTO";
+import { postMeal } from "@storage/meal/postMeal";
 type FormType = 'CREATE' | 'EDIT';
 type Props = {
 
     type?:FormType;
-    nomeProp?:string;
-    horaProp?:string;
-    dataProp?:string;
-    descricaoProp?:string;
-    selectProp?:SelectProps;
+
 }
 
 
-export function Form({ type = 'CREATE', nomeProp = '', horaProp = '', dataProp = '', descricaoProp = '', selectProp = 'VAZIO' }: Props){
+export function Form({ type = 'CREATE'}: Props){
     const [nome, setNome] = useState("");
     const [hora, setHora] = useState("");
     const [data, setData] = useState("");
@@ -36,15 +34,14 @@ export function Form({ type = 'CREATE', nomeProp = '', horaProp = '', dataProp =
         setSelect("NAO");
         setCheckSelect(false);
     }
-    function handleCreate(){
-        const obj = {
+    async function handleCreate(){
+        const obj: Meal = {
             nome,
             descricao,
             hora,
-            data,
-            dieta: select
+            dieta: select === 'SIM' ? true : false
         }
-        console.log(obj);
+        await postMeal(obj, data);
         const dieta: MediaProps = select === 'SIM' ?  'ACIMA' : 'ABAIXO'
         navigation.navigate("FeedBack", {dieta});
     }
@@ -92,7 +89,7 @@ export function Form({ type = 'CREATE', nomeProp = '', horaProp = '', dataProp =
                         </BoxSelect>
                 </BoxSelects>
             </BoxForm>
-            <Button text={type === 'CREATE' ? "Cadastrar Refeição" : "Salvar Alterações"} onPress={type === 'CREATE' ? handleCreate : handleEdit} />
+            <Button text={type === 'CREATE' ? "Cadastrar Refeição" : "Salvar Alterações"} onPress={handleCreate} />
         </Container>
     );
 }

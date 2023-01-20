@@ -9,7 +9,7 @@ type Props = {
 export function Header({title = ''}: Props){
     const navigation = useNavigation();
     function handleGoBack(){
-        navigation.goBack();
+        navigation.navigate("Home");
     }
     return(
         <Container>       
