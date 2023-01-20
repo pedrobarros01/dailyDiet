@@ -5,7 +5,9 @@ export declare global {
         interface RootParamList {
             Home: undefined;
             Meal: undefined;
-            Statics: undefined;
+            Statics: {
+                media: MediaProps
+            };
             Edit: undefined;
             FeedBack: {
                 dieta: MediaProps

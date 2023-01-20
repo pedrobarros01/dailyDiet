@@ -5,7 +5,7 @@ import { CardProps, Container, SubTitle, Title } from "./styles";
 type Props = {
     media?: MediaProps;
     type?: CardProps;
-    title: string;
+    title: number;
     subtitle: string;
 }
 
