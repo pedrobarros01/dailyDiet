@@ -8,7 +8,6 @@ type Props = {
 
 export const Container = styled.View<Props>`
     flex: 1;
-    
     background-color: ${({theme, media}) => media === 'ACIMA' ? theme.COLORS.BRAND.GREEN.LIGHT : theme.COLORS.BRAND.RED.LIGHT};
 `;
 export const BoxStaticsGeneral = styled.View`
@@ -28,10 +27,10 @@ export const Title = styled.Text`
         margin-bottom: 12px;
     `}
 `;
-export const BoxHighLight = styled.View`
+export const BoxHighLight = styled.View<Props>`
     flex: 1;
     width: 100%;
-    background-color: ${({theme}) => theme.COLORS.BRAND.GREEN.LIGHT};
+    background-color: ${({theme, media}) => media === 'ACIMA' ? theme.COLORS.BRAND.GREEN.LIGHT : theme.COLORS.BRAND.RED.LIGHT};
 `;
 export const BoxStatics = styled.View`
     flex: 1;

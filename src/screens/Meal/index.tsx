@@ -6,7 +6,9 @@ import { MediaProps } from "@screens/Statics/styles";
 import { deleteMeals } from "@storage/meal/deleteMeal";
 import { getMeal } from "@storage/meal/getMeal";
 import { MealType } from "@storage/meal/mealDTO";
+import { AppError } from "@utils/AppError";
 import { useState, useCallback } from "react";
+import { Alert } from "react-native";
 import { Container, BoxButton, Box, BoxTitleAndSubTitle, DateTime, DateTimeTitle, DescMeal, NameMeal, ChipCard, Icon, TitleChip } from "./styles";
 type Props = {
     media?: MediaProps;
@@ -47,7 +49,11 @@ export function Meal({media = 'ACIMA'}: Props){
             const meal = await getMeal(date, nameMeal);
             setRefeicao(meal);
         }catch(error){
-            console.error(error);
+            if(error instanceof AppError){
+                Alert.alert("Refeição", error.message);
+            }else{
+                Alert.alert("Refeição", "Nao conseguimos encontrar a refeição");
+            }
         }
     }
     useFocusEffect(useCallback(() => {

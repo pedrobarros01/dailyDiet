@@ -2,7 +2,7 @@ import { Button } from "@components/Button";
 import { Input } from "@components/Input";
 import { Select } from "@components/Select";
 import { useState } from "react";
-import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import { Alert, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { SelectProps } from "@components/Select/styles";
 import { Container, BoxForm, BoxDateTime, BoxSelects, Label, BoxSelect } from "./styles";
 import { useNavigation } from "@react-navigation/native";
@@ -10,6 +10,7 @@ import { MediaProps } from "@screens/Statics/styles";
 import { MealType } from "@storage/meal/mealDTO";
 import { postMeal } from "@storage/meal/postMeal";
 import { putMeal } from "@storage/meal/putMeals";
+import { AppError } from "@utils/AppError";
 type FormType = 'CREATE' | 'EDIT';
 type Props = {
 
@@ -46,9 +47,18 @@ export function Form({ type = 'CREATE', meal = {nome: '', descricao: '', dieta: 
                 hora,
                 dieta: select === 'SIM' ? true : false
             }
-            await postMeal(obj, data);
-            const dieta: MediaProps = select === 'SIM' ?  'ACIMA' : 'ABAIXO'
-            navigation.navigate("FeedBack", {dieta});
+            try{
+                await postMeal(obj, data);
+                const dieta: MediaProps = select === 'SIM' ?  'ACIMA' : 'ABAIXO'
+                navigation.navigate("FeedBack", {dieta});
+            }catch(error){
+                if(error instanceof AppError){
+                    Alert.alert("Formulario", error.message);
+                }else{
+                    Alert.alert("Formulario", "Nao conseguimos cadastrar refeição");
+                }
+            }
+            
         }else{
 
                 let diet: boolean = false;
@@ -67,8 +77,17 @@ export function Form({ type = 'CREATE', meal = {nome: '', descricao: '', dieta: 
                     dieta: diet,
                     hora
                 }
-                await putMeal(obj, date);
-                navigation.navigate("Meal", {date, name: meal.nome});
+                try{
+                    await putMeal(obj, date);
+                    navigation.navigate("Meal", {date, name: meal.nome});
+                }catch(error){
+                    if(error instanceof AppError){
+                        Alert.alert("Formulario", error.message);
+                    }else{
+                        Alert.alert("Formulario", "Nao conseguimos editar refeição");
+                    }
+                }
+                
 
         }
     }

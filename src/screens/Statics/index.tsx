@@ -8,6 +8,8 @@ import { getOverViewSequenceMealsInsideDiet } from "@storage/overview/getOverVie
 import { Container, BoxStaticsGeneral, BoxHighLight, MediaProps, Title, BoxStatics, BoxMeals } from "./styles";
 import {useState, useCallback} from "react";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { AppError } from "@utils/AppError";
+import { Alert } from "react-native";
 type Props = {
     media: MediaProps;
 }
@@ -31,7 +33,11 @@ export function Statics(){
             setOutMeal(out);
             setSequenceMeal(sequence);
         }catch(error){
-            console.error(error);
+            if(error instanceof AppError){
+                Alert.alert("Estatisticas", error.message);
+            }else{
+                Alert.alert("Estatisticas", "Nao conseguimos encontrar a estatistica");
+            }
         }
     }
     useFocusEffect(useCallback(() => {
@@ -40,7 +46,7 @@ export function Statics(){
     return(
         <Container media={media} >
             <Header />
-            <BoxHighLight>
+            <BoxHighLight media={media}>
                 <HighLight />
             </BoxHighLight>
             <BoxStaticsGeneral>
