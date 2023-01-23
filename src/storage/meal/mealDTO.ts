@@ -1,10 +1,10 @@
-export type Meal = {
+export type MealType = {
     nome: string;
     descricao: string;
     hora: string;
     dieta: boolean;
 }
-export type MealCollection = {
+export type MealCollectionType = {
     data: string;
-    listaMeal: Meal[];
+    listaMeal: MealType[];
 }

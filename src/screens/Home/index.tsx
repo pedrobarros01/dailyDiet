@@ -7,14 +7,14 @@ import { FlatList, ScrollView, Text, View } from "react-native";
 import { ListMeals } from "@components/ListMeals";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback, useState, useEffect } from "react";
-import { Meal, MealCollection } from "@storage/meal/mealDTO";
+import { MealType, MealCollectionType } from "@storage/meal/mealDTO";
 import { getMealsByDate } from "@storage/meal/getMealsByDate";
 import { Input } from "@components/Input";
 import { BackGroundType } from "@components/StaticsOverview/styles";
 import { getPercent } from "@storage/overview/getPercent";
 export function Home(){
     const navigation = useNavigation();
-    const [listMeals, setListMeals] = useState<Meal[]>([]);
+    const [listMeals, setListMeals] = useState<MealType[]>([]);
     const [data, setData] = useState("");
     const [type, setType] = useState<BackGroundType>("PRIMARY");
     function handleCreate(){

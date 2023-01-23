@@ -3,14 +3,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MEAL_COLLECTION } from "@storage/storageConfig";
 import { getDatesMeals } from "./getDatesMeals";
 import { getMealsByDate } from "./getMealsByDate";
-import { Meal } from "./mealDTO";
+import { MealType } from "./mealDTO";
 
-export async function putMeal(meal: Meal, date: string){
+export async function putMeal(meal: MealType, date: string){
     try{
         const storedMealByDate = await getMealsByDate(date);
         storedMealByDate.map((item) => {
             if(meal.nome === item.nome){
-                item = meal;
+                item.descricao = meal.descricao;
+                item.dieta = meal.dieta;
+                item.hora = item.hora;
                 return item;
             }
         });

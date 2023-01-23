@@ -9,11 +9,11 @@ type Props = {
     subtitle: string;
 }
 
-export function CardStatics({media = 'ACIMA', type = 'INFO'} : Props){
+export function CardStatics({media = 'ACIMA', type = 'INFO', title, subtitle} : Props){
     return(
         <Container media={media} type={type} >
-            <Title>99</Title>
-            <SubTitle>de dentro da refeição</SubTitle>
+            <Title>{title}</Title>
+            <SubTitle>{subtitle}</SubTitle>
         </Container>
     );
 }

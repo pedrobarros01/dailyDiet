@@ -1,36 +1,71 @@
 import { Button } from "@components/Button";
 import { Header } from "@components/Header";
 import { ModalMeal } from "@components/ModalMeal";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import { MediaProps } from "@screens/Statics/styles";
-import { useState } from "react";
+import { deleteMeals } from "@storage/meal/deleteMeal";
+import { getMeal } from "@storage/meal/getMeal";
+import { MealType } from "@storage/meal/mealDTO";
+import { useState, useCallback } from "react";
 import { Container, BoxButton, Box, BoxTitleAndSubTitle, DateTime, DateTimeTitle, DescMeal, NameMeal, ChipCard, Icon, TitleChip } from "./styles";
 type Props = {
     media?: MediaProps;
 }
+type Route = {
+    name: string;
+    date: string;
+}
 export function Meal({media = 'ACIMA'}: Props){
+    const routes = useRoute();
+    const {name, date} = routes.params as Route;
     const [mostrar, setMostrar] = useState(false)
+    const [refeicao, setRefeicao] = useState<MealType>({
+        nome: '',
+        descricao: '',
+        dieta: false,
+        hora: ''
+    });
     const navigation = useNavigation();
+    async function deletarRefeicao(){
+        try{
+            await deleteMeals(date, refeicao);
+            navigation.navigate("Home");
+        }catch(error){
+            throw error;
+        }
+    }
     function handleExcluir(){
         setMostrar(true);
+        
     }
     function handleEditar(){
-        console.log("Alou");
-        navigation.navigate("Edit");
+        
+        navigation.navigate("Edit", {refeicao, date});
     }
+    async function fetchMeal(date: string, nameMeal:string){
+        try{
+            const meal = await getMeal(date, nameMeal);
+            setRefeicao(meal);
+        }catch(error){
+            console.error(error);
+        }
+    }
+    useFocusEffect(useCallback(() => {
+        fetchMeal(date, name);
+    }, []))
     return(
-        <Container media={media} >
+        <Container media={refeicao.dieta ? 'ACIMA' : 'ABAIXO'} >
             <Header title="Refeição" />
             <Box>
                 <BoxTitleAndSubTitle>
-                    <NameMeal>Sanduiche</NameMeal>
-                    <DescMeal>Sanduíche de pão integral com atum e salada de alface e tomate</DescMeal>
+                    <NameMeal>{refeicao.nome}</NameMeal>
+                    <DescMeal>{refeicao.descricao}</DescMeal>
                     <DateTimeTitle>Data e Hora</DateTimeTitle>
-                    <DateTime>12/08/2022 às 16:00</DateTime>
+                    <DateTime>{date} às {refeicao.hora}</DateTime>
                     <ChipCard>
-                        <Icon name="circle" media={media} />
+                        <Icon name="circle" media={refeicao.dieta ? 'ACIMA' : 'ABAIXO'}/>
                         {
-                            media === 'ACIMA' ?(
+                            refeicao.dieta ? (
                                 <TitleChip>Dentro da dieta</TitleChip> 
                             ) : 
                             (
@@ -57,7 +92,7 @@ export function Meal({media = 'ACIMA'}: Props){
 
                 </BoxButton>
             </Box>
-            <ModalMeal mostrar={mostrar} setMostrar={setMostrar} />
+            <ModalMeal mostrar={mostrar} setMostrar={setMostrar} deletarRefeicao={deletarRefeicao} />
         </Container>
     );
 }

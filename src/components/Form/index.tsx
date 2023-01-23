@@ -7,22 +7,26 @@ import { SelectProps } from "@components/Select/styles";
 import { Container, BoxForm, BoxDateTime, BoxSelects, Label, BoxSelect } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { MediaProps } from "@screens/Statics/styles";
-import { Meal } from "@storage/meal/mealDTO";
+import { MealType } from "@storage/meal/mealDTO";
 import { postMeal } from "@storage/meal/postMeal";
+import { putMeal } from "@storage/meal/putMeals";
 type FormType = 'CREATE' | 'EDIT';
 type Props = {
 
     type?:FormType;
+    meal?: MealType;
+    date?: string;
 
 }
 
 
-export function Form({ type = 'CREATE'}: Props){
-    const [nome, setNome] = useState("");
-    const [hora, setHora] = useState("");
-    const [data, setData] = useState("");
-    const [descricao, setDescricao] = useState("");
-    const [select, setSelect] = useState<SelectProps>('VAZIO');
+
+export function Form({ type = 'CREATE', meal = {nome: '', descricao: '', dieta: false, hora: ''}, date = ''}: Props){
+    const [nome, setNome] = useState(meal?.nome);
+    const [hora, setHora] = useState(meal?.hora);
+    const [data, setData] = useState(date);
+    const [descricao, setDescricao] = useState(meal?.descricao);
+    const [select, setSelect] = useState<SelectProps>(type === 'CREATE' ? 'VAZIO' : meal.dieta ? 'SIM' : 'NAO');
     const [checkselect, setCheckSelect] = useState<boolean | null>(null);
     const navigation = useNavigation();
 
@@ -34,27 +38,51 @@ export function Form({ type = 'CREATE'}: Props){
         setSelect("NAO");
         setCheckSelect(false);
     }
-    async function handleCreate(){
-        const obj: Meal = {
-            nome,
-            descricao,
-            hora,
-            dieta: select === 'SIM' ? true : false
+    async function handleForm(){
+        if(type === 'CREATE'){
+            const obj: MealType = {
+                nome,
+                descricao,
+                hora,
+                dieta: select === 'SIM' ? true : false
+            }
+            await postMeal(obj, data);
+            const dieta: MediaProps = select === 'SIM' ?  'ACIMA' : 'ABAIXO'
+            navigation.navigate("FeedBack", {dieta});
+        }else{
+
+                let diet: boolean = false;
+                if(select === 'VAZIO'){
+                    diet = meal?.dieta;
+                }
+                if(select === 'SIM'){
+                    diet = true;
+                }
+                if(select === 'NAO'){
+                    diet = false;
+                }
+                const obj: MealType = {
+                    nome: meal?.nome,
+                    descricao,
+                    dieta: diet,
+                    hora
+                }
+                await putMeal(obj, date);
+                navigation.navigate("Meal", {date, name: meal.nome});
+
         }
-        await postMeal(obj, data);
-        const dieta: MediaProps = select === 'SIM' ?  'ACIMA' : 'ABAIXO'
-        navigation.navigate("FeedBack", {dieta});
-    }
-    function handleEdit(){
-        navigation.navigate("Meal");
     }
     return(
         <Container> 
             
             <BoxForm>     
-                <Input label="Nome"  onChangeText={setNome}/>
                 <Input 
-                label="Descrição" 
+                label="Nome"  
+                value={nome}
+                onChangeText={setNome}/>
+                <Input 
+                label="Descrição"
+                value={descricao}
                 multilinha 
                 onChangeText={setDescricao} />
                 <BoxDateTime>
@@ -62,12 +90,14 @@ export function Form({ type = 'CREATE'}: Props){
                     label="Data" 
                     keyboardType="number-pad" 
                     date
+                    value={data}
                     onChangeText={setData}
                 />
                 <Input 
                     label="Hora"
                     keyboardType="number-pad" 
                     date
+                    value={hora}
                     onChangeText={setHora}
                 />
                 </BoxDateTime>
@@ -75,13 +105,13 @@ export function Form({ type = 'CREATE'}: Props){
                         <Label>Está dentro da dieta?</Label>
                         <BoxSelect>
                             <Select 
-                                select={checkselect ? 'SIM' : 'VAZIO'}
+                                select={select === 'SIM' ? 'SIM' : 'VAZIO'}
                                 icon="SIM" 
                                 label="Sim"
                                 onPress={handleSelectSim}
                             />
                             <Select 
-                                select={!checkselect && checkselect !== null ? 'NAO' : 'VAZIO'} 
+                                select={select === 'NAO' ? 'NAO' : 'VAZIO'} 
                                 icon="NAO" 
                                 label="Não"
                                 onPress={handleSelectNao}
@@ -89,7 +119,7 @@ export function Form({ type = 'CREATE'}: Props){
                         </BoxSelect>
                 </BoxSelects>
             </BoxForm>
-            <Button text={type === 'CREATE' ? "Cadastrar Refeição" : "Salvar Alterações"} onPress={handleCreate} />
+            <Button text={type === 'CREATE' ? "Cadastrar Refeição" : "Salvar Alterações"} onPress={handleForm} />
         </Container>
     );
 }

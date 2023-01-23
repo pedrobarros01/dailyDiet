@@ -2,11 +2,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MEAL_COLLECTION } from "@storage/storageConfig";
 import { AppError } from "@utils/AppError";
 import { getMealsByDate } from "./getMealsByDate";
-import { Meal, MealCollection } from "./mealDTO";
+import { MealCollectionType, MealType } from "./mealDTO";
 import { postDatesMeals } from "./postDatesMeals";
 
 
-export async function postMeal(meal: Meal, date: string){
+export async function postMeal(meal: MealType, date: string){
 
     try{
         await postDatesMeals(date);

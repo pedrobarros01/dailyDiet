@@ -8,26 +8,32 @@ export async function getOverViewSequenceMealsInsideDiet(): Promise<number>{
         const dates = await getDatesMeals();
         let i = 0;
         let lock = true;
+        let lock2 = true;
+        const arrayMaxSequence: number[] = []
         for(const date of dates){
             const mealsInDate = await getMealsByDate(date);
-            if(lock){
-                for(const meal of mealsInDate){
-                    if(meal.dieta){
-                        i++;
-                    }else{
-                        lock = true
-                    }
-                    if(lock){
-                        break;
-                    }
+            for(const meal of mealsInDate){
+                if(meal.dieta){
+                    i++;
+                }else{
+                    lock2 = false;
                 }
-
-            }else{
-                break;
+                if(!lock2){
+                    arrayMaxSequence.push(i);
+                    break;
+                }
             }
 
+
         }
-        return i;
+        let maior = arrayMaxSequence[0];
+        for(let j = 1; j < arrayMaxSequence.length; j++){
+            if(maior < arrayMaxSequence[j]){
+                maior = arrayMaxSequence[j];
+            }
+        }
+
+        return maior;
     }catch(error){
         throw error;
     }

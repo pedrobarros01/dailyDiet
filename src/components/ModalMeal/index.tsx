@@ -4,13 +4,15 @@ import { ModalCenteredView, BoxButtons, LabelModal, ModalView } from "./styles";
 type Props = {
     mostrar:boolean;
     setMostrar: React.Dispatch<React.SetStateAction<boolean>>;
+    deletarRefeicao: Function
 }
 
-export function ModalMeal({mostrar, setMostrar}:Props){
+export function ModalMeal({mostrar, setMostrar, deletarRefeicao}:Props){
     function handleCancelar(){
         setMostrar(false);
     }
     function handleExcluir(){
+        deletarRefeicao();
         console.log("Alou");
     }
     return(
