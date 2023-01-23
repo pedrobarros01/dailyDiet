@@ -1,1 +1,2 @@
 # README para rocket 
+Não consegui seguir o figma disponibilizado, mas precisamente nas listas das refeições, mas coloquei todas as funcionalidades pedidas. Se puder tirar essa dúvida comigo, ficarei agradecido!

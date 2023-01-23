@@ -5,7 +5,7 @@ import { MEAL_COLLECTION } from "@storage/storageConfig";
 export async function delete2(){
     try {
         await AsyncStorage.removeItem(`${MEAL_COLLECTION}`);
-    } catch (error) {
+    }catch (error) {
         throw error;
     }
 }
